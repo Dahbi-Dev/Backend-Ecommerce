@@ -84,17 +84,14 @@ const Product = mongoose.model("Product", {
   },
   description: { // New field for description
     type: String,
-    required: false,
+    required: true,
   },
  
   date: {
     type: Date,
     default: Date.now,
   },
-  available: {
-    type: Boolean,
-    default: true,
-  },
+ 
 });
 
 
