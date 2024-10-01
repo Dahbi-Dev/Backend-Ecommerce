@@ -107,15 +107,17 @@ app.post("/addproduct", async (req, res) => {
   } else {
     id = 1;
   }
+
   const product = new Product({
     id: id,
     name: req.body.name,
+    description: req.body.description, // Corrected this line
     image: req.body.image,
     category: req.body.category,
     new_price: req.body.new_price,
     old_price: req.body.old_price,
   });
-  // console.log(product);
+
   await product.save();
   console.log("Saved");
   res.json({
