@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const cors = require("cors");
-const fs = require("fs"); 
+const fs = require("fs");
 
 const path = require("path");
 const bcrypt = require("bcrypt");
@@ -82,18 +82,20 @@ const Product = mongoose.model("Product", {
     type: Number,
     required: true,
   },
-  description: { // New field for description
+  description: {
+    // Add description field
     type: String,
     required: true,
   },
- 
   date: {
     type: Date,
     default: Date.now,
   },
- 
+  available: {
+    type: Boolean,
+    default: true,
+  },
 });
-
 
 app.post("/addproduct", async (req, res) => {
   let products = await Product.find({});
@@ -383,8 +385,6 @@ app.post("/admin/login", async (req, res) => {
   }
 });
 
-
-
 // endpoint for deleting all products
 app.delete("/deleteallproducts", async (req, res) => {
   try {
@@ -420,7 +420,6 @@ app.delete("/deleteallproducts", async (req, res) => {
     });
   }
 });
-
 
 app.listen(port, (error) => {
   if (!error) {
