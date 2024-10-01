@@ -6,6 +6,8 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const cors = require("cors");
+const fs = require("fs"); 
+
 const path = require("path");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
@@ -377,6 +379,45 @@ app.post("/admin/login", async (req, res) => {
     res.status(400).json({ success: false, errors: "Wrong email address" });
   }
 });
+
+
+
+// endpoint for deleting all products
+app.delete("/deleteallproducts", async (req, res) => {
+  try {
+    // Step 1: Delete all products from the database
+    await Product.deleteMany({});
+    console.log("All products deleted from the database.");
+
+    // Step 2: Remove all images from the upload/images directory
+    const directory = "./upload/images";
+
+    fs.readdir(directory, (err, files) => {
+      if (err) throw err;
+
+      // Loop through each file and delete it
+      for (const file of files) {
+        fs.unlink(path.join(directory, file), (err) => {
+          if (err) throw err;
+        });
+      }
+    });
+
+    console.log("All images deleted from the upload/images folder.");
+
+    res.json({
+      success: true,
+      message: "All products and images deleted successfully.",
+    });
+  } catch (error) {
+    console.error("Error deleting products or images:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error deleting products or images.",
+    });
+  }
+});
+
 
 app.listen(port, (error) => {
   if (!error) {
