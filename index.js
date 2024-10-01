@@ -82,15 +82,24 @@ const Product = mongoose.model("Product", {
     type: Number,
     required: true,
   },
+  description: { // New field for description
+    type: String,
+    required: true,
+  },
+  sizes: { // New field for sizes
+    type: [String], // Store sizes as an array of strings
+    required: true,
+  },
   date: {
     type: Date,
     default: Date.now,
   },
-  avilable: {
+  available: {
     type: Boolean,
     default: true,
   },
 });
+
 
 app.post("/addproduct", async (req, res) => {
   let products = await Product.find({});
