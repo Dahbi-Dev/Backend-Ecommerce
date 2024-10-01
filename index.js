@@ -84,12 +84,9 @@ const Product = mongoose.model("Product", {
   },
   description: { // New field for description
     type: String,
-    required: true,
+    required: false,
   },
-  sizes: { // New field for sizes
-    type: [String], // Store sizes as an array of strings
-    required: true,
-  },
+ 
   date: {
     type: Date,
     default: Date.now,
